@@ -1,207 +1,245 @@
+/**
+ *Submitted for verification at Etherscan.io on 2021-08-16
+*/
 
-// File: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Counters.sol
+/**
+ *Submitted for verification at Etherscan.io on 2021-08-12
+*/
 
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.0;
+pragma solidity ^0.8.0;
+
 /**
- * @title Counters
- * @author Matt Condon (@shrugs)
+ * @title INFLUENCERZ
+s
  * @dev Provides counters that can only be incremented, decremented or reset. This can be used e.g. to track the number
  * of elements in a mapping, issuing ERC721 ids, or counting request ids.
  *
  * Include with `using Counters for Counters.Counter;`
- */
-interface IERC165 {
+ 
+
+██╗███╗░░██╗███████╗██╗░░░░░██╗░░░██╗███████╗███╗░░██╗░█████╗░███████╗██████╗░███████╗
+██║████╗░██║██╔════╝██║░░░░░██║░░░██║██╔════╝████╗░██║██╔══██╗██╔════╝██╔══██╗╚════██║
+██║██╔██╗██║█████╗░░██║░░░░░██║░░░██║█████╗░░██╔██╗██║██║░░╚═╝█████╗░░██████╔╝░░███╔═╝
+██║██║╚████║██╔══╝░░██║░░░░░██║░░░██║██╔══╝░░██║╚████║██║░░██╗██╔══╝░░██╔══██╗██╔══╝░░
+██║██║░╚███║██║░░░░░███████╗╚██████╔╝███████╗██║░╚███║╚█████╔╝███████╗██║░░██║███████╗
+╚═╝╚═╝░░╚══╝╚═╝░░░░░╚══════╝░╚═════╝░╚══════╝╚═╝░░╚══╝░╚════╝░╚══════╝╚═╝░░╚═╝╚══════╝
+*/
+library SafeMath {
     /**
-     * @dev Returns true if this contract implements the interface defined by
-     * `interfaceId`. See the corresponding
-     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]
-     * to learn more about how these ids are created.
+     * @dev Returns the addition of two unsigned integers, with an overflow flag.
      *
-     * This function call must use less than 30 000 gas.
+     * _Available since v3.4._
      */
-    function supportsInterface(bytes4 interfaceId) external view returns (bool);
-}
-library Counters {
-    struct Counter {
-        // This variable should never be directly accessed by users of the library: interactions must be restricted to
-        // the library's function. As of Solidity v0.5.2, this cannot be enforced, though there is a proposal to add
-        // this feature: see https://github.com/ethereum/solidity/issues/4637
-        uint256 _value; // default: 0
-    }
-
-    function current(Counter storage counter) internal view returns (uint256) {
-        return counter._value;
-    }
-
-    function increment(Counter storage counter) internal {
+    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         unchecked {
-            counter._value += 1;
+            uint256 c = a + b;
+            if (c < a) return (false, 0);
+            return (true, c);
         }
     }
 
-    function decrement(Counter storage counter) internal {
-        uint256 value = counter._value;
-        require(value > 0, "Counter: decrement overflow");
+    /**
+     * @dev Returns the substraction of two unsigned integers, with an overflow flag.
+     *
+     * _Available since v3.4._
+     */
+    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {
         unchecked {
-            counter._value = value - 1;
+            if (b > a) return (false, 0);
+            return (true, a - b);
         }
     }
 
-    function reset(Counter storage counter) internal {
-        counter._value = 0;
-    }
-}
-
-// File: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/security/Pausable.sol
-abstract contract Context {
-    function _msgSender() internal view virtual returns (address) {
-        return msg.sender;
-    }
-
-    function _msgData() internal view virtual returns (bytes calldata) {
-        return msg.data;
-    }
-}
-
-
-
-/**
- * @dev Contract module which allows children to implement an emergency stop
- * mechanism that can be triggered by an authorized account.
- *
- * This module is used through inheritance. It will make available the
- * modifiers `whenNotPaused` and `whenPaused`, which can be applied to
- * the functions of your contract. Note that they will not be pausable by
- * simply including this module, only once the modifiers are put in place.
- */
-
-// File: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
-
-
-
-
-
-/**
- * @dev Contract module which provides a basic access control mechanism, where
- * there is an account (an owner) that can be granted exclusive access to
- * specific functions.
- *
- * By default, the owner account will be the one that deploys the contract. This
- * can later be changed with {transferOwnership}.
- *
- * This module is used through inheritance. It will make available the modifier
- * `onlyOwner`, which can be applied to your functions to restrict their use to
- * the owner.
- */
-
-// File: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/introspection/ERC165.sol
-
-abstract contract Pausable is Context {
     /**
-     * @dev Emitted when the pause is triggered by `account`.
+     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.
+     *
+     * _Available since v3.4._
      */
-    event Paused(address account);
-
-    /**
-     * @dev Emitted when the pause is lifted by `account`.
-     */
-    event Unpaused(address account);
-
-    bool private _paused;
-
-    /**
-     * @dev Initializes the contract in unpaused state.
-     */
-    constructor() {
-        _paused = false;
+    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
+            // benefit is lost if 'b' is also tested.
+            // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
+            if (a == 0) return (true, 0);
+            uint256 c = a * b;
+            if (c / a != b) return (false, 0);
+            return (true, c);
+        }
     }
 
     /**
-     * @dev Returns true if the contract is paused, and false otherwise.
+     * @dev Returns the division of two unsigned integers, with a division by zero flag.
+     *
+     * _Available since v3.4._
      */
-    function paused() public view virtual returns (bool) {
-        return _paused;
+    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a / b);
+        }
     }
 
     /**
-     * @dev Modifier to make a function callable only when the contract is not paused.
+     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a % b);
+        }
+    }
+
+    /**
+     * @dev Returns the addition of two unsigned integers, reverting on
+     * overflow.
+     *
+     * Counterpart to Solidity's `+` operator.
      *
      * Requirements:
      *
-     * - The contract must not be paused.
+     * - Addition cannot overflow.
      */
-    modifier whenNotPaused() {
-        require(!paused(), "Pausable: paused");
-        _;
+    function add(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a + b;
     }
 
     /**
-     * @dev Modifier to make a function callable only when the contract is paused.
+     * @dev Returns the subtraction of two unsigned integers, reverting on
+     * overflow (when the result is negative).
+     *
+     * Counterpart to Solidity's `-` operator.
      *
      * Requirements:
      *
-     * - The contract must be paused.
+     * - Subtraction cannot overflow.
      */
-    modifier whenPaused() {
-        require(paused(), "Pausable: not paused");
-        _;
+    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a - b;
     }
 
     /**
-     * @dev Triggers stopped state.
+     * @dev Returns the multiplication of two unsigned integers, reverting on
+     * overflow.
+     *
+     * Counterpart to Solidity's `*` operator.
      *
      * Requirements:
      *
-     * - The contract must not be paused.
+     * - Multiplication cannot overflow.
      */
-    function _pause() internal virtual whenNotPaused {
-        _paused = true;
-        emit Paused(_msgSender());
+    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a * b;
     }
 
     /**
-     * @dev Returns to normal state.
+     * @dev Returns the integer division of two unsigned integers, reverting on
+     * division by zero. The result is rounded towards zero.
+     *
+     * Counterpart to Solidity's `/` operator.
      *
      * Requirements:
      *
-     * - The contract must be paused.
+     * - The divisor cannot be zero.
      */
-    function _unpause() internal virtual whenPaused {
-        _paused = false;
-        emit Unpaused(_msgSender());
+    function div(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a / b;
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
+     * reverting when dividing by zero.
+     *
+     * Counterpart to Solidity's `%` operator. This function uses a `revert`
+     * opcode (which leaves remaining gas untouched) while Solidity uses an
+     * invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function mod(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a % b;
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on
+     * overflow (when the result is negative).
+     *
+     * CAUTION: This function is deprecated because it requires allocating memory for the error
+     * message unnecessarily. For custom revert reasons use {trySub}.
+     *
+     * Counterpart to Solidity's `-` operator.
+     *
+     * Requirements:
+     *
+     * - Subtraction cannot overflow.
+     */
+    function sub(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b <= a, errorMessage);
+            return a - b;
+        }
+    }
+
+    /**
+     * @dev Returns the integer division of two unsigned integers, reverting with custom message on
+     * division by zero. The result is rounded towards zero.
+     *
+     * Counterpart to Solidity's `/` operator. Note: this function uses a
+     * `revert` opcode (which leaves remaining gas untouched) while Solidity
+     * uses an invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function div(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b > 0, errorMessage);
+            return a / b;
+        }
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
+     * reverting with custom message when dividing by zero.
+     *
+     * CAUTION: This function is deprecated because it requires allocating memory for the error
+     * message unnecessarily. For custom revert reasons use {tryMod}.
+     *
+     * Counterpart to Solidity's `%` operator. This function uses a `revert`
+     * opcode (which leaves remaining gas untouched) while Solidity uses an
+     * invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function mod(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b > 0, errorMessage);
+            return a % b;
+        }
     }
 }
 
-
-
-/**
- * @dev Implementation of the {IERC165} interface.
- *
- * Contracts that want to implement ERC165 should inherit from this contract and override {supportsInterface} to check
- * for the additional interface id that will be supported. For example:
- *
- * ```solidity
- * function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
- *     return interfaceId == type(MyInterface).interfaceId || super.supportsInterface(interfaceId);
- * }
- * ```
- *
- * Alternatively, {ERC165Storage} provides an easier to use but more expensive implementation.
- */
-abstract contract ERC165 is IERC165 {
-    /**
-     * @dev See {IERC165-supportsInterface}.
-     */
-    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-        return interfaceId == type(IERC165).interfaceId;
-    }
-}
-
-// File: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Strings.sol
-
-
+pragma solidity ^0.8.0;
 
 /**
  * @dev String operations.
@@ -266,78 +304,7 @@ library Strings {
     }
 }
 
-// File: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Context.sol
-
-
-/**
- * @dev Provides information about the current execution context, including the
- * sender of the transaction and its data. While these are generally available
- * via msg.sender and msg.data, they should not be accessed in such a direct
- * manner, since when dealing with meta-transactions the account sending and
- * paying for execution may not be the actual sender (as far as an application
- * is concerned).
- *
- * This contract is only required for intermediate, library-like contracts.
- */
-
-abstract contract Ownable is Context {
-    address private _owner;
-
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
-    /**
-     * @dev Initializes the contract setting the deployer as the initial owner.
-     */
-    constructor() {
-        _setOwner(_msgSender());
-    }
-
-    /**
-     * @dev Returns the address of the current owner.
-     */
-    function owner() public view virtual returns (address) {
-        return _owner;
-    }
-
-    /**
-     * @dev Throws if called by any account other than the owner.
-     */
-    modifier onlyOwner() {
-        require(owner() == _msgSender(), "Ownable: caller is not the owner");
-        _;
-    }
-
-    /**
-     * @dev Leaves the contract without owner. It will not be possible to call
-     * `onlyOwner` functions anymore. Can only be called by the current owner.
-     *
-     * NOTE: Renouncing ownership will leave the contract without an owner,
-     * thereby removing any functionality that is only available to the owner.
-     */
-    function renounceOwnership() public virtual onlyOwner {
-        _setOwner(address(0));
-    }
-
-    /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Can only be called by the current owner.
-     */
-    function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
-        _setOwner(newOwner);
-    }
-
-    function _setOwner(address newOwner) private {
-        address oldOwner = _owner;
-        _owner = newOwner;
-        emit OwnershipTransferred(oldOwner, newOwner);
-    }
-}
-
-// File: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Address.sol
-
-
-
+pragma solidity ^0.8.0;
 
 /**
  * @dev Collection of functions related to the address type
@@ -466,7 +433,7 @@ library Address {
         require(isContract(target), "Address: call to non-contract");
 
         (bool success, bytes memory returndata) = target.call{value: value}(data);
-        return verifyCallResult(success, returndata, errorMessage);
+        return _verifyCallResult(success, returndata, errorMessage);
     }
 
     /**
@@ -493,7 +460,7 @@ library Address {
         require(isContract(target), "Address: static call to non-contract");
 
         (bool success, bytes memory returndata) = target.staticcall(data);
-        return verifyCallResult(success, returndata, errorMessage);
+        return _verifyCallResult(success, returndata, errorMessage);
     }
 
     /**
@@ -520,20 +487,14 @@ library Address {
         require(isContract(target), "Address: delegate call to non-contract");
 
         (bool success, bytes memory returndata) = target.delegatecall(data);
-        return verifyCallResult(success, returndata, errorMessage);
+        return _verifyCallResult(success, returndata, errorMessage);
     }
 
-    /**
-     * @dev Tool to verifies that a low level call was successful, and revert if it wasn't, either by bubbling the
-     * revert reason using the provided one.
-     *
-     * _Available since v4.3._
-     */
-    function verifyCallResult(
+    function _verifyCallResult(
         bool success,
         bytes memory returndata,
         string memory errorMessage
-    ) internal pure returns (bytes memory) {
+    ) private pure returns (bytes memory) {
         if (success) {
             return returndata;
         } else {
@@ -552,20 +513,7 @@ library Address {
     }
 }
 
-// File: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/IERC721Metadata.sol
-
-
-
-
-/**
- * @title ERC-721 Non-Fungible Token Standard, optional metadata extension
- * @dev See https://eips.ethereum.org/EIPS/eip-721
- */
-
-
-// File: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721Receiver.sol
-
-
+pragma solidity ^0.8.0;
 
 /**
  * @title ERC721 token receiver interface
@@ -590,9 +538,7 @@ interface IERC721Receiver {
     ) external returns (bytes4);
 }
 
-// File: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/introspection/IERC165.sol
-
-
+pragma solidity ^0.8.0;
 
 /**
  * @dev Interface of the ERC165 standard, as defined in the
@@ -603,12 +549,44 @@ interface IERC721Receiver {
  *
  * For an implementation, see {ERC165}.
  */
+interface IERC165 {
+    /**
+     * @dev Returns true if this contract implements the interface defined by
+     * `interfaceId`. See the corresponding
+     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]
+     * to learn more about how these ids are created.
+     *
+     * This function call must use less than 30 000 gas.
+     */
+    function supportsInterface(bytes4 interfaceId) external view returns (bool);
+}
 
+pragma solidity ^0.8.0;
 
-// File: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721.sol
+/**
+ * @dev Implementation of the {IERC165} interface.
+ *
+ * Contracts that want to implement ERC165 should inherit from this contract and override {supportsInterface} to check
+ * for the additional interface id that will be supported. For example:
+ *
+ * ```solidity
+ * function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+ *     return interfaceId == type(MyInterface).interfaceId || super.supportsInterface(interfaceId);
+ * }
+ * ```
+ *
+ * Alternatively, {ERC165Storage} provides an easier to use but more expensive implementation.
+ */
+abstract contract ERC165 is IERC165 {
+    /**
+     * @dev See {IERC165-supportsInterface}.
+     */
+    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+        return interfaceId == type(IERC165).interfaceId;
+    }
+}
 
-
-
+pragma solidity ^0.8.0;
 
 /**
  * @dev Required interface of an ERC721 compliant contract.
@@ -747,25 +725,37 @@ interface IERC721 is IERC165 {
     ) external;
 }
 
-// File: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol
-
-
-
-
-
-
-
-
-
+pragma solidity ^0.8.0;
 
 /**
- * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including
- * the Metadata extension, but not including the Enumerable extension, which is available separately as
- * {ERC721Enumerable}.
+ * @title ERC-721 Non-Fungible Token Standard, optional enumeration extension
+ * @dev See https://eips.ethereum.org/EIPS/eip-721
  */
+interface IERC721Enumerable is IERC721 {
+    /**
+     * @dev Returns the total amount of tokens stored by the contract.
+     */
+    function totalSupply() external view returns (uint256);
 
-// File: Set.sol
+    /**
+     * @dev Returns a token ID owned by `owner` at a given `index` of its token list.
+     * Use along with {balanceOf} to enumerate all of ``owner``'s tokens.
+     */
+    function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256 tokenId);
 
+    /**
+     * @dev Returns a token ID at a given `index` of all the tokens stored by the contract.
+     * Use along with {totalSupply} to enumerate all tokens.
+     */
+    function tokenByIndex(uint256 index) external view returns (uint256);
+}
+
+pragma solidity ^0.8.0;
+
+/**
+ * @title ERC-721 Non-Fungible Token Standard, optional metadata extension
+ * @dev See https://eips.ethereum.org/EIPS/eip-721
+ */
 interface IERC721Metadata is IERC721 {
     /**
      * @dev Returns the token collection name.
@@ -782,6 +772,107 @@ interface IERC721Metadata is IERC721 {
      */
     function tokenURI(uint256 tokenId) external view returns (string memory);
 }
+
+pragma solidity ^0.8.0;
+
+/*
+ * @dev Provides information about the current execution context, including the
+ * sender of the transaction and its data. While these are generally available
+ * via msg.sender and msg.data, they should not be accessed in such a direct
+ * manner, since when dealing with meta-transactions the account sending and
+ * paying for execution may not be the actual sender (as far as an application
+ * is concerned).
+ *
+ * This contract is only required for intermediate, library-like contracts.
+ */
+abstract contract Context {
+    function _msgSender() internal view virtual returns (address) {
+        return msg.sender;
+    }
+
+    function _msgData() internal view virtual returns (bytes calldata) {
+        return msg.data;
+    }
+}
+
+pragma solidity ^0.8.0;
+
+/**
+ * @dev Contract module which provides a basic access control mechanism, where
+ * there is an account (an owner) that can be granted exclusive access to
+ * specific functions.
+ *
+ * By default, the owner account will be the one that deploys the contract. This
+ * can later be changed with {transferOwnership}.
+ *
+ * This module is used through inheritance. It will make available the modifier
+ * `onlyOwner`, which can be applied to your functions to restrict their use to
+ * the owner.
+ */
+abstract contract Ownable is Context {
+    address private _owner;
+
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+    /**
+     * @dev Initializes the contract setting the deployer as the initial owner.
+     */
+    constructor () {
+        address msgSender = _msgSender();
+        _owner = msgSender;
+        emit OwnershipTransferred(address(0), msgSender);
+    }
+
+    /**
+     * @dev Returns the address of the current owner.
+     */
+    function owner() public view virtual returns (address) {
+        return _owner;
+    }
+
+    /**
+     * @dev Throws if called by any account other than the owner.
+     */
+    modifier onlyOwner() {
+        require(owner() == _msgSender(), "Ownable: caller is not the owner");
+        _;
+    }
+
+    /**
+     * @dev Leaves the contract without owner. It will not be possible to call
+     * `onlyOwner` functions anymore. Can only be called by the current owner.
+     *
+     * NOTE: Renouncing ownership will leave the contract without an owner,
+     * thereby removing any functionality that is only available to the owner.
+     */
+    function renounceOwnership() public virtual onlyOwner {
+        emit OwnershipTransferred(_owner, address(0));
+        _setOwner(address(0));
+    }
+
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Can only be called by the current owner.
+     */
+    function transferOwnership(address newOwner) public virtual onlyOwner {
+        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        _setOwner(newOwner);
+    }
+
+    function _setOwner(address newOwner) private {
+        address oldOwner = _owner;
+        _owner = newOwner;
+        emit OwnershipTransferred(oldOwner, newOwner);
+    }
+}
+
+pragma solidity ^0.8.0;
+
+/**
+ * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including
+ * the Metadata extension, but not including the Enumerable extension, which is available separately as
+ * {ERC721Enumerable}.
+ */
 contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
     using Address for address;
     using Strings for uint256;
@@ -804,6 +895,8 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
     // Mapping from owner to operator approvals
     mapping(address => mapping(address => bool)) private _operatorApprovals;
 
+
+    string public _baseURI;
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
@@ -859,8 +952,8 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
 
-        string memory baseURI = _baseURI();
-        return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, tokenId.toString())) : "";
+        string memory base = baseURI();
+        return bytes(base).length > 0 ? string(abi.encodePacked(base, tokenId.toString())) : "";
     }
 
     /**
@@ -868,8 +961,8 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
      * token will be the concatenation of the `baseURI` and the `tokenId`. Empty
      * by default, can be overriden in child contracts.
      */
-    function _baseURI() internal view virtual returns (string memory) {
-        return "";
+    function baseURI() internal view virtual returns (string memory) {
+        return _baseURI;
     }
 
     /**
@@ -1141,7 +1234,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
     ) private returns (bool) {
         if (to.isContract()) {
             try IERC721Receiver(to).onERC721Received(_msgSender(), from, tokenId, _data) returns (bytes4 retval) {
-                return retval == IERC721Receiver.onERC721Received.selector;
+                return retval == IERC721Receiver(to).onERC721Received.selector;
             } catch (bytes memory reason) {
                 if (reason.length == 0) {
                     revert("ERC721: transfer to non ERC721Receiver implementer");
@@ -1179,290 +1272,356 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
 
 
 
+pragma solidity ^0.8.0;
 
+/**
+ * @dev This implements an optional extension of {ERC721} defined in the EIP that adds
+ * enumerability of all the token ids in the contract as well as all token ids owned by each
+ * account.
+ */
+abstract contract ERC721Enumerable is ERC721, IERC721Enumerable {
+    // Mapping from owner to list of owned token IDs
+    mapping(address => mapping(uint256 => uint256)) private _ownedTokens;
 
+    // Mapping from token ID to index of the owner tokens list
+    mapping(uint256 => uint256) private _ownedTokensIndex;
 
-contract INFLUENCERZ is ERC721, Ownable,Pausable {
-    using Counters for Counters.Counter;
-    
-    mapping(uint256 => string) private _tokenURIs;
+    // Array with all token ids, used for enumeration
+    uint256[] private _allTokens;
 
-    Counters.Counter private _tokenIds;
+    // Mapping from token id to position in the allTokens array
+    mapping(uint256 => uint256) private _allTokensIndex;
 
-    uint256 private maxSupply = 10000;
+    /**
+     * @dev See {IERC165-supportsInterface}.
+     */
+    function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC721) returns (bool) {
+        return interfaceId == type(IERC721Enumerable).interfaceId || super.supportsInterface(interfaceId);
+    }
+
+    /**
+     * @dev See {IERC721Enumerable-tokenOfOwnerByIndex}.
+     */
+    function tokenOfOwnerByIndex(address owner, uint256 index) public view virtual override returns (uint256) {
+        require(index < ERC721.balanceOf(owner), "ERC721Enumerable: owner index out of bounds");
+        return _ownedTokens[owner][index];
+    }
+
+    /**
+     * @dev See {IERC721Enumerable-totalSupply}.
+     */
+    function totalSupply() public view virtual override returns (uint256) {
+        return _allTokens.length;
+    }
+
+    /**
+     * @dev See {IERC721Enumerable-tokenByIndex}.
+     */
+    function tokenByIndex(uint256 index) public view virtual override returns (uint256) {
+        require(index < ERC721Enumerable.totalSupply(), "ERC721Enumerable: global index out of bounds");
+        return _allTokens[index];
+    }
+
+    /**
+     * @dev Hook that is called before any token transfer. This includes minting
+     * and burning.
+     *
+     * Calling conditions:
+     *
+     * - When `from` and `to` are both non-zero, ``from``'s `tokenId` will be
+     * transferred to `to`.
+     * - When `from` is zero, `tokenId` will be minted for `to`.
+     * - When `to` is zero, ``from``'s `tokenId` will be burned.
+     * - `from` cannot be the zero address.
+     * - `to` cannot be the zero address.
+     *
+     * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
+     */
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal virtual override {
+        super._beforeTokenTransfer(from, to, tokenId);
+
+        if (from == address(0)) {
+            _addTokenToAllTokensEnumeration(tokenId);
+        } else if (from != to) {
+            _removeTokenFromOwnerEnumeration(from, tokenId);
+        }
+        if (to == address(0)) {
+            _removeTokenFromAllTokensEnumeration(tokenId);
+        } else if (to != from) {
+            _addTokenToOwnerEnumeration(to, tokenId);
+        }
+    }
+
+    /**
+     * @dev Private function to add a token to this extension's ownership-tracking data structures.
+     * @param to address representing the new owner of the given token ID
+     * @param tokenId uint256 ID of the token to be added to the tokens list of the given address
+     */
+    function _addTokenToOwnerEnumeration(address to, uint256 tokenId) private {
+        uint256 length = ERC721.balanceOf(to);
+        _ownedTokens[to][length] = tokenId;
+        _ownedTokensIndex[tokenId] = length;
+    }
+
+    /**
+     * @dev Private function to add a token to this extension's token tracking data structures.
+     * @param tokenId uint256 ID of the token to be added to the tokens list
+     */
+    function _addTokenToAllTokensEnumeration(uint256 tokenId) private {
+        _allTokensIndex[tokenId] = _allTokens.length;
+        _allTokens.push(tokenId);
+    }
+
+    /**
+     * @dev Private function to remove a token from this extension's ownership-tracking data structures. Note that
+     * while the token is not assigned a new owner, the `_ownedTokensIndex` mapping is _not_ updated: this allows for
+     * gas optimizations e.g. when performing a transfer operation (avoiding double writes).
+     * This has O(1) time complexity, but alters the order of the _ownedTokens array.
+     * @param from address representing the previous owner of the given token ID
+     * @param tokenId uint256 ID of the token to be removed from the tokens list of the given address
+     */
+    function _removeTokenFromOwnerEnumeration(address from, uint256 tokenId) private {
+        // To prevent a gap in from's tokens array, we store the last token in the index of the token to delete, and
+        // then delete the last slot (swap and pop).
+
+        uint256 lastTokenIndex = ERC721.balanceOf(from) - 1;
+        uint256 tokenIndex = _ownedTokensIndex[tokenId];
+
+        // When the token to delete is the last token, the swap operation is unnecessary
+        if (tokenIndex != lastTokenIndex) {
+            uint256 lastTokenId = _ownedTokens[from][lastTokenIndex];
+
+            _ownedTokens[from][tokenIndex] = lastTokenId; // Move the last token to the slot of the to-delete token
+            _ownedTokensIndex[lastTokenId] = tokenIndex; // Update the moved token's index
+        }
+
+        // This also deletes the contents at the last position of the array
+        delete _ownedTokensIndex[tokenId];
+        delete _ownedTokens[from][lastTokenIndex];
+    }
+
+    /**
+     * @dev Private function to remove a token from this extension's token tracking data structures.
+     * This has O(1) time complexity, but alters the order of the _allTokens array.
+     * @param tokenId uint256 ID of the token to be removed from the tokens list
+     */
+    function _removeTokenFromAllTokensEnumeration(uint256 tokenId) private {
+        // To prevent a gap in the tokens array, we store the last token in the index of the token to delete, and
+        // then delete the last slot (swap and pop).
+
+        uint256 lastTokenIndex = _allTokens.length - 1;
+        uint256 tokenIndex = _allTokensIndex[tokenId];
+
+        // When the token to delete is the last token, the swap operation is unnecessary. However, since this occurs so
+        // rarely (when the last minted token is burnt) that we still do the swap here to avoid the gas cost of adding
+        // an 'if' statement (like in _removeTokenFromOwnerEnumeration)
+        uint256 lastTokenId = _allTokens[lastTokenIndex];
+
+        _allTokens[tokenIndex] = lastTokenId; // Move the last token to the slot of the to-delete token
+        _allTokensIndex[lastTokenId] = tokenIndex; // Update the moved token's index
+
+        // This also deletes the contents at the last position of the array
+        delete _allTokensIndex[tokenId];
+        _allTokens.pop();
+    }
+}
+
+pragma solidity ^0.8.0;
+
+contract INFLUENCERZ  is ERC721Enumerable, Ownable
+{
+    using SafeMath for uint256;
+    using Address for address;
+    using Strings for uint256;
+
    
-    
-    string  private tokenBaseURI;
-    
-    string private base='base';
-    string private chrome='chrome';
-    string private refractor='refractor';
-    string private artist='artist';
-    uint public basePrice=0.08 ether;
-    uint public chromePrice=0.125 ether;
-    uint public refractorPrice=0.175 ether;
-    address payable private Owner;
-    
-    uint256 public constant MAX_BID_DURATION = 60;
-    uint public auctionEndTime=0;
-    uint public bidCounter=0;
+    string private base = 'base';
+    string private chrome = 'chrome';
+    string private refractor = 'refractor';
+    string private artist = 'artist';
+    uint public basePrice = 0.08 ether;
+    uint public chromePrice = 0.125 ether;
+    uint public refractorPrice = 0.175 ether;
+    bool public isPaused = true;
+    uint public reserve = 200;
+    uint256 public constant MAX_BID_DURATION = 1440;
+    uint public auctionEndTime = 0;
+    uint public bidCounter = 0;
     uint public newBid;
     uint public auctionId;
     bool public auctionStart;
-    // state
-    bool public canceled;
-    
+    uint public minBid = 0.5 ether;
     address public highestBidder;
-    mapping(address => uint256) public fundsByBidder;
+    uint highestBid=0;
+    bool public canceled;
     bool ownerHasWithdrawn;
-
-    event LogBid(address bidder, uint highestBid, address highestBidder) ;
+    mapping(address => uint256) public fundsByBidder;
+    
+    
+    event LogBid(address bidder, uint highestBid, address highestBidder);
     event LogWithdrawal(address withdrawer, address withdrawalAccount, uint amount);
     event LogCanceled();
-
     event MAX_SUPPLY_UPDATED(uint256 maxSupply);
     
+    constructor(string memory baseURI) ERC721("INFLUENCERZ", "INFLZ")  {
+        setBaseURI(baseURI);
+    }
+    function setBaseURI(string memory baseURI) public onlyOwner {
+        _baseURI = baseURI;
+    }
+
+    function getPrice(string memory _type) public view returns(uint256) {
+        if (keccak256(bytes(_type)) == keccak256(bytes(base))) {
+            return basePrice;
+        } else if (keccak256(bytes(_type)) == keccak256(bytes(chrome))) {
+            return chromePrice;
+        } else if (keccak256(bytes(_type)) == keccak256(bytes(refractor))) {
+            return refractorPrice;
+        } else {
+            revert("HDHDF");
+        }
+    }
+   
+    function mint(string memory _type) public payable   {
+        require(isPaused == false, "Sale is not active at the moment");
+        require(getPrice(_type) == msg.value, "Ether value sent is not correct");
+       
+        _safeMint(msg.sender, totalSupply());
         
-    constructor(string memory _baseURII) ERC721("INFLUENCERZ", "INFLZ"){tokenBaseURI=_baseURII;  Owner = payable(msg.sender);}
-  
-        function getPrice(string memory _type) public view returns (uint256) {
-        if(keccak256(bytes(_type)) == keccak256(bytes(base))){
-           return basePrice;
-        } else if (keccak256(bytes(_type)) == keccak256(bytes(chrome))){
-            return  chromePrice;
-        } else if (keccak256(bytes(_type)) == keccak256(bytes(refractor))){
-            return  refractorPrice;
-        }
-         else {
-        revert("HDHDF");
-        }
     }
+    
+    function mintByAdmin()  public onlyOwner  {
 
-    function mint(string memory _type) whenNotPaused() public payable returns (uint256) {
-   
-   require(msg.sender!=Owner);
-    require(getPrice(_type) == msg.value, "Ether value sent is not correct");
-
-        uint256 newItemId;
-        _tokenIds.increment();
-         newItemId = _tokenIds.current();
-        require(newItemId <= maxSupply);
+        require(isPaused == false, "Sale is not active at the moment");
        
-        _mint(msg.sender, newItemId);
-        _setTokenURI(newItemId, tokenBaseURI);
-    
-            return newItemId;
+        _safeMint(msg.sender, totalSupply());
 
-    }
-      function mintByAdmin(string memory _type) whenNotPaused() public onlyOwner  returns (uint256) {
-   
-   
-    
+        
 
-        uint256 newItemId;
-        _tokenIds.increment();
-         newItemId = _tokenIds.current();
-        require(newItemId <= maxSupply);
-       
-        _mint(msg.sender, newItemId);
-        _setTokenURI(newItemId, tokenBaseURI);
-    
-            return newItemId;
-
-    }
-
-     /**
-     * @dev See {IERC721Enumerable-totalSupply}.
-     */
-    function totalSupply() public view returns (uint256) {
-        return _tokenIds.current();
-    }
-
-     /**
-     * @dev Withdraw ether from this contract (Callable by owner)
-     */
-    function withdraw() public onlyOwner {
-        uint amount = address(this).balance;
-        (bool success,) = Owner.call{value: amount}("");
-        require(success, "Failed to send Ether");
     }
     
-        /**
-     * @dev See {IERC721Metadata-tokenURI}.
-     */
-
-
-    /**
-     * @dev Sets `_tokenURI` as the tokenURI of `tokenId`.
-     *
-     * Requirements:
-     *
-     * - `tokenId` must exist.
-     */
-    function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal virtual {
-        require(_exists(tokenId), "ERC721URIStorage: URI set of nonexistent token");
-        _tokenURIs[tokenId] = _tokenURI;
-    }
-
-    /**
-     * @dev Destroys `tokenId`.
-     * The approval is cleared when the token is burned.
-     *
-     * Requirements:
-     *
-     * - `tokenId` must exist.
-     *
-     * Emits a {Transfer} event.
-     */
-      function burn(uint256 tokenId) public onlyOwner {
-      _burn(tokenId);
-    }
-        /**
-     * @dev Gets current Price
-     */
-   
-        function updateMaxSupply(uint256 _maxSupply) public onlyOwner {
-        maxSupply = _maxSupply;
-        emit MAX_SUPPLY_UPDATED(_maxSupply);
-    }
-    
-        function updateBasePrice(uint _basePrice) public
-        {
-            basePrice=_basePrice;
-        }
-         function updateChromeePrice(uint _chromePrice) public
-        {
-            chromePrice=_chromePrice;
-        }
-         function updateRefractorPrice(uint _refractorPrice) public
-        {
-            refractorPrice=_refractorPrice;
-        }
-  
-    
- function _baseURI() internal view override returns (string memory) {
-    return tokenBaseURI ;
-  }
-  
-  function updateBaseURI(string memory _baseURIII) public onlyOwner returns(string memory )
-  {
-      tokenBaseURI=_baseURIII;
-      return tokenBaseURI;
-  }
-     function pause() public onlyOwner whenNotPaused 
-   {
-        _pause();
-    }
-    
-     function unpause() public onlyOwner whenPaused 
-     {
-        _unpause();
-    }
-    function auction() public  onlyOwner returns(uint) {
  
-        require(auctionStart==false);
-        
-        _tokenIds.increment();
-         auctionId = _tokenIds.current();
-        require(auctionId <= maxSupply);
-        _mint(msg.sender, auctionId);
-        _setTokenURI(auctionId, tokenBaseURI);
-    
-        auctionStart=true;
-            return auctionId;
-        
-        
-        
-        
-       
-    }
-    
-    
-    function auctionEnd() public onlyOwner
+    function tokensOfOwner(address _owner) public view returns (uint256[] memory)
     {
-        require(auctionEndTime!=0,"Auction not started");
-        require(block.timestamp>auctionEndTime,"Auction not ended");
-        _transfer(msg.sender,highestBidder,auctionId);
-        
-        
-        auctionStart==false;
-        newBid=0;
-        highestBidder=0x0000000000000000000000000000000000000000;
-        auctionEndTime=0;
+        uint256 count = balanceOf(_owner);
+        uint256[] memory result = new uint256[](count);
+        for (uint256 index = 0; index < count; index++) {
+            result[index] = tokenOfOwnerByIndex(_owner, index);
+        }
+        return result;
     }
 
-    function getHighestBid() public view returns (uint)
-    {
+    function withdraw() public onlyOwner {
+       uint amount = address(this).balance;
+        (bool success, ) = payable(owner()).call {
+            value: amount
+        }("");
+        require(success, "Failed to send Ether");
+        
+    }
+ 
+    function flipPauseStatus() public onlyOwner {
+        isPaused = !isPaused;
+    }
+
+
+    function updateBasePrice(uint _basePrice) public {
+        basePrice = _basePrice;
+    }
+
+    function updateChromeePrice(uint _chromePrice) public {
+        chromePrice = _chromePrice;
+    }
+
+    function updateRefractorPrice(uint _refractorPrice) public {
+        refractorPrice = _refractorPrice;
+    }
+    
+    function auction() public onlyOwner returns(uint) {
+
+        require(auctionStart == false);
+        auctionId = totalSupply();
+        auctionId=auctionId++;
+        
+        _safeMint(msg.sender, auctionId);
+       
+
+        auctionStart = true;
+        return auctionId;
+    }
+    
+    function auctionEnd() public onlyOwner {
+        
+        require(auctionEndTime != 0, "Auction not started");
+        require(block.timestamp > auctionEndTime, "Auction not ended");
+        _transfer(msg.sender, highestBidder, auctionId);
+
+
+        auctionStart = false;
+        newBid = 0;
+        highestBidder = 0x0000000000000000000000000000000000000000;
+        auctionEndTime = 0;
+        bidCounter = 0;
+        highestBid=0;
+    }
+    
+    function getHighestBid() public view returns(uint) {
+        
         return fundsByBidder[highestBidder];
     }
-
-    function placeBid() public
-        payable
-        
-        
-        onlyNotOwner
-        
-    {
-        require(auctionStart==true,"Auction not started");
+    
+    function placeBid() public payable onlyNotOwner {
+    
+        require(auctionStart == true, "Auction not started");
         // reject payments of 0 ETH
-        require (msg.value > 0,"error");
-        if(bidCounter==0)
-        {
-        auctionEndTime=block.timestamp + MAX_BID_DURATION;
+        require(msg.value >= minBid, "error");
+        if (bidCounter == 0) {
+            auctionEndTime = block.timestamp + MAX_BID_DURATION;
         }
         bidCounter++;
-        require(block.timestamp <=auctionEndTime,"auction canceled");
-      
-         newBid = fundsByBidder[msg.sender] + msg.value;
-        require(newBid >=fundsByBidder[highestBidder],"error") ;
-    
-        uint highestBid = fundsByBidder[highestBidder];
-    
-        
-        if(bidCounter!=0)
-        {
-        // uint amount = address(this).balance-newBid;
-        (bool success,) = highestBidder.call{value: highestBid}("");
+        require(block.timestamp <= auctionEndTime, "auction canceled");
+
+        newBid = msg.value;
+        require(newBid >= fundsByBidder[highestBidder], "error");
+
+        highestBid = fundsByBidder[highestBidder];
+
+
+        if (bidCounter != 0) {
+            // uint amount = address(this).balance-newBid;
+            (bool success, ) = highestBidder.call {
+                value: highestBid
+            }("");
             require(success, "Failed to send Ether");
-        
+
         }
 
         fundsByBidder[msg.sender] = newBid;
-            highestBidder=msg.sender;
-        
-            
-            highestBid = newBid;
-       
+        highestBidder = msg.sender;
 
-       emit LogBid(msg.sender, highestBid, highestBidder);
+
+        highestBid = newBid;
+
+
+        emit LogBid(msg.sender, highestBid, highestBidder);
         // return true;
     }
-
-
-    function cancelAuction() public
-        onlyOwner
+    function cancelAuction() public onlyOwner returns(bool success) {
         
-      
-        returns (bool success)
-    {
         canceled = true;
-         emit LogCanceled();
+        emit LogCanceled();
         return true;
     }
-
-   
-   
-
-   
-
-   
- modifier onlyNotOwner() {
+    
+    modifier onlyNotOwner() {
         require(owner() != _msgSender(), " caller is  the owner");
         _;
     }
-   
 
 
-    
+
 }
-
